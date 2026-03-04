@@ -5,36 +5,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tahadc</title>
 
+<!-- Favicon -->
+<link rel="icon" href="logo.png" type="image/png">
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
-
-/* =========================
-   GLOBAL
-========================= */
-
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
     font-family:'Inter',sans-serif;
 }
-
 html{
     scroll-behavior:smooth;
 }
-
 body{
     background:#07070b;
     color:white;
     overflow-x:hidden;
-    line-height:1.6;
 }
 
 /* =========================
-   INTRO
+   INTRO SPLIT
 ========================= */
-
 #intro{
     position:fixed;
     inset:0;
@@ -43,43 +37,36 @@ body{
     justify-content:center;
     align-items:center;
     z-index:2000;
+    flex-direction:column;
     transition:1s cubic-bezier(0.16,1,0.3,1);
 }
 
 #splitText{
-    font-size:clamp(50px,10vw,90px);
+    font-size:90px;
     font-weight:900;
+    display:flex;
+    gap:8px;
 }
 
 #splitText span{
     display:inline-block;
-    transition:1.2s cubic-bezier(0.16,1,0.3,1);
-}
-
-.left{
-    transform:translateX(-60px);
     opacity:0;
+    transform:translateY(40px);
+    transition:1s cubic-bezier(0.16,1,0.3,1);
 }
 
-.right{
-    transform:translateX(60px);
-    opacity:0;
-}
-
-#intro.active .left,
-#intro.active .right{
-    transform:translateX(0);
+#intro.active span{
     opacity:1;
+    transform:translateY(0);
 }
 
 /* =========================
    NAV
 ========================= */
-
 nav{
     position:fixed;
     width:100%;
-    padding:20px 8%;
+    padding:18px 8%;
     display:flex;
     justify-content:space-between;
     align-items:center;
@@ -87,15 +74,35 @@ nav{
     background:rgba(10,10,15,0.7);
     border-bottom:1px solid rgba(255,255,255,0.05);
     z-index:1000;
+    opacity:0;
+    transform:translateY(-20px);
+    transition:1s cubic-bezier(0.16,1,0.3,1);
+}
+
+nav.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-weight:800;
+    font-size:18px;
+}
+
+.logo img{
+    width:34px;
+    height:34px;
 }
 
 nav a{
-    color:#e5e5e5; /* site uyumlu renk */
+    color:#e5e5e5;
     text-decoration:none;
     margin-left:25px;
     font-size:15px;
     opacity:0.85;
-    transition:0.3s;
 }
 
 nav a:hover{
@@ -106,7 +113,6 @@ nav a:hover{
 /* =========================
    HERO
 ========================= */
-
 .hero{
     min-height:100vh;
     display:flex;
@@ -114,7 +120,20 @@ nav a:hover{
     justify-content:center;
     align-items:center;
     text-align:center;
-    padding:0 20px;
+    opacity:0;
+    transform:translateY(30px);
+    transition:1.3s cubic-bezier(0.16,1,0.3,1);
+}
+
+.hero.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.hero img{
+    width:90px;
+    height:90px;
+    margin-bottom:25px;
 }
 
 .hero h1{
@@ -135,7 +154,6 @@ nav a:hover{
 /* =========================
    SECTIONS
 ========================= */
-
 section{
     padding:120px 8%;
 }
@@ -153,7 +171,6 @@ section{
 /* =========================
    CARD
 ========================= */
-
 .card{
     background:rgba(255,255,255,0.04);
     border:1px solid rgba(255,255,255,0.08);
@@ -171,9 +188,8 @@ section{
 }
 
 /* =========================
-   CONTACT / SOCIAL
+   SOCIAL BUTTONS
 ========================= */
-
 .social-buttons{
     display:flex;
     flex-direction:column;
@@ -194,7 +210,7 @@ section{
     font-size:15px;
     min-width:220px;
     justify-content:center;
-    transition:0.3s cubic-bezier(0.16,1,0.3,1);
+    transition:0.3s ease;
 }
 
 .social-btn:hover{
@@ -203,8 +219,23 @@ section{
 }
 
 /* =========================
-   FOOTER
+   MOBILE
 ========================= */
+@media (max-width:768px){
+    nav{
+        padding:16px 6%;
+    }
+    .logo img{
+        width:28px;
+        height:28px;
+    }
+    .social-btn{
+        min-width:100%;
+    }
+    section{
+        padding:100px 6%;
+    }
+}
 
 footer{
     text-align:center;
@@ -212,52 +243,24 @@ footer{
     font-size:14px;
     color:#6e6e73;
 }
-
-/* =========================
-   MOBILE
-========================= */
-
-@media (max-width:768px){
-
-    section{
-        padding:100px 6%;
-    }
-
-    .card{
-        padding:30px;
-    }
-
-    .social-btn{
-        min-width:100%;
-        justify-content:center;
-    }
-
-    nav{
-        padding:18px 6%;
-    }
-
-    nav a{
-        font-size:14px;
-        margin-left:15px;
-    }
-}
-
 </style>
 </head>
-
 <body>
 
 <!-- INTRO -->
 <div id="intro">
     <h1 id="splitText">
-        <span class="left">Taha</span>
-        <span class="right">dc</span>
+        <span>Taha</span>
+        <span>dc</span>
     </h1>
 </div>
 
 <!-- NAV -->
-<nav>
-    <div style="font-weight:800;">Tahadc</div>
+<nav id="navbar">
+    <div class="logo">
+        <img src="logo.png" alt="Tahadc Logo">
+        Tahadc
+    </div>
     <div>
         <a href="#about">Hakkımda</a>
         <a href="#projects">Projeler</a>
@@ -266,12 +269,13 @@ footer{
 </nav>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero" id="hero">
+    <img src="logo.png" alt="Tahadc Logo">
     <h1>Tahadc</h1>
     <p>Minimal, modern ve premium web deneyimleri tasarlıyorum.</p>
 </section>
 
-<!-- HAKKIMDA -->
+<!-- ABOUT -->
 <section id="about">
     <h2 class="section-title">Hakkımda</h2>
     <div class="card">
@@ -279,12 +283,14 @@ footer{
     </div>
 </section>
 
-<!-- PROJELER -->
+<!-- PROJECTS -->
 <section id="projects">
     <h2 class="section-title">Projeler</h2>
     <div class="card">
         <h3>Thesap</h3>
-        <p style="margin-top:15px;color:#a1a1aa;">Tıp Puan Hesaplama Sitesi</p>
+        <p style="margin-top:15px;color:#a1a1aa;">
+            Tıp Puan Hesaplama Sitesi
+        </p>
         <a href="https://thesap.vercel.app" target="_blank"
            style="display:inline-block;margin-top:20px;color:#0071e3;text-decoration:none;font-weight:600;">
            Siteye Git
@@ -292,7 +298,7 @@ footer{
     </div>
 </section>
 
-<!-- İLETİŞİM -->
+<!-- CONTACT -->
 <section id="contact">
     <h2 class="section-title">İletişim</h2>
     <div class="card social-buttons">
@@ -300,6 +306,7 @@ footer{
             <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" width="18" style="filter:invert(1);">
             Instagram
         </a>
+
         <a class="social-btn" href="https://wa.me/905313640667" target="_blank">
             <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" width="18" style="filter:invert(1);">
             WhatsApp
@@ -307,19 +314,24 @@ footer{
     </div>
 </section>
 
-<!-- FOOTER -->
 <footer>© 2026 Tahadc</footer>
 
 <script>
 /* INTRO ANIMATION */
-window.addEventListener("load",()=>{
-    const intro=document.getElementById("intro");
-    setTimeout(()=> intro.classList.add("active"),300);
+window.addEventListener("load", () => {
+    const intro = document.getElementById("intro");
+    const spans = document.querySelectorAll("#splitText span");
+    const hero = document.getElementById("hero");
+    const navbar = document.getElementById("navbar");
+
+    spans.forEach((span,i)=>{
+        setTimeout(()=>{ span.style.opacity="1"; span.style.transform="translateY(0)"; }, i*300);
+    });
 
     setTimeout(()=>{
         intro.style.opacity="0";
-        setTimeout(()=> intro.style.display="none",1000);
-    },2500);
+        setTimeout(()=>{ intro.style.display="none"; hero.classList.add("show"); navbar.classList.add("show"); },1000);
+    },2000);
 });
 </script>
 
